@@ -10,6 +10,7 @@ import java.util.Collection;
 public interface TaskService {
     public void createTask(Task task);
     public void updateTask(Task task);
+    public void deleteTask(Integer id);
     public Task getTask(Integer id);
     public Collection<Task> getAllTasks();
 }

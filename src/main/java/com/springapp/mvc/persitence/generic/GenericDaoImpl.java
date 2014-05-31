@@ -34,7 +34,7 @@ public abstract class GenericDaoImpl<Entity, Key extends Serializable> implement
 
     @Override
     public void update(Entity entity) {
-        getCurrentSession().merge(entity);
+        getCurrentSession().update(entity);
     }
 
     @Override
