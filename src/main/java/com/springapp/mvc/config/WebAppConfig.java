@@ -21,7 +21,6 @@ import java.util.Properties;
  * Created by novy on 31.05.14.
  */
 
-
 @Configuration
 @ComponentScan("com.springapp.mvc")
 @EnableWebMvc
