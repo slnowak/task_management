@@ -1,4 +1,4 @@
-package com.springapp.mvc.domain;
+package com.springapp.mvc.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
