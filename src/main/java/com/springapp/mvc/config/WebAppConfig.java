@@ -34,6 +34,7 @@ public class WebAppConfig {
 
     private static final String HIBERNATE_DIALECT = "hibernate.dialect";
     private static final String HIBERNATE_SHOW_SQL = "hibernate.show_sql";
+    private static final String HIBERNATE_HBM2DDL = "hibernate.hbm2ddl.auto";
     private static final String ENTITY_MANAGER_PACKAGES_TO_SCAN = "entity.manager.packages.to.scan";
 
     private static final String URL_RESOLVER_PREFIX = "/WEB-INF/pages/";
@@ -70,6 +71,7 @@ public class WebAppConfig {
 
         properties.put(HIBERNATE_DIALECT, environment.getRequiredProperty(HIBERNATE_DIALECT));
         properties.put(HIBERNATE_SHOW_SQL, environment.getRequiredProperty(HIBERNATE_SHOW_SQL));
+        properties.put(HIBERNATE_HBM2DDL, environment.getRequiredProperty(HIBERNATE_HBM2DDL));
 
         return properties;
     }
