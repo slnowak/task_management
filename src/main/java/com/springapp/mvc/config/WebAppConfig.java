@@ -1,9 +1,6 @@
 package com.springapp.mvc.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
@@ -26,6 +23,7 @@ import java.util.Properties;
 @EnableWebMvc
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
+@Import({ SecurityConfig.class })
 public class WebAppConfig {
     private static final String DATABASE_DRIVER = "database.driver";
     private static final String DATABASE_URL = "database.url";

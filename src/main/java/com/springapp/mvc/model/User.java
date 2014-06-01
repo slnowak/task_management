@@ -2,6 +2,8 @@ package com.springapp.mvc.model;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by novy on 01.06.14.
@@ -10,44 +12,32 @@ import java.util.Collection;
 @Entity
 @Table(name = "user")
 public class User {
-    static enum Role {
-        USER, ADMIN
-    }
-
     @Id
-    @GeneratedValue
-    @Column(name = "user_id")
-    private Integer id;
-
     private String username;
+    private String password;
     private String firstName;
     private String lastName;
     private String email;
     private Boolean active;
-    private Role role;
-
 
     @OneToMany(mappedBy = "user")
     private Collection<Task> tasks;
 
-    public User(String username, String firstName, String lastName, Boolean active, Role role, Collection<Task> tasks) {
+    @OneToMany(mappedBy = "user")
+    private Set<UserRole> userRole = new HashSet<>();
+
+    public User(String username, String password, String firstName, String lastName, Boolean active,
+                Collection<Task> tasks, Set<UserRole> userRole) {
         this.username = username;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.active = active;
-        this.role = role;
         this.tasks = tasks;
+        this.userRole = userRole;
     }
 
     public User() {}
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;
@@ -55,6 +45,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -89,19 +87,23 @@ public class User {
         this.active = active;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
     public Collection<Task> getTasks() {
         return tasks;
     }
 
     public void setTasks(Collection<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public Set<UserRole> getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(Set<UserRole> userRole) {
+        this.userRole = userRole;
+    }
+
+    public void addTask(Task task) {
+        tasks.add(task);
     }
 }

@@ -31,13 +31,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(Integer taskId) {
-        return userDao.getByPrimaryKey(taskId);
+    public User getUser(String username) {
+        return userDao.getByPrimaryKey(username);
     }
 
     @Override
-    public void deleteUser(Integer taskId) {
-        User user = getUser(taskId);
+    public void deleteUser(String username) {
+        User user = getUser(username);
         userDao.delete(user);
     }
 }
