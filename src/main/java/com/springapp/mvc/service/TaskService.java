@@ -10,7 +10,8 @@ import java.util.Collection;
 public interface TaskService {
     public void createTask(Task task);
     public void updateTask(Task task);
-    public void deleteTask(Integer id);
-    public Task getTask(Integer id);
+    public void deleteTask(Integer taskId);
+    public Task getTask(Integer taskId);
     public Collection<Task> getAllTasks();
+    public Collection<Task> findByUsername(String username);
 }

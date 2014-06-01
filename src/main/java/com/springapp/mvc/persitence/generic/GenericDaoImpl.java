@@ -1,7 +1,10 @@
 package com.springapp.mvc.persitence.generic;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
@@ -51,6 +54,14 @@ public abstract class GenericDaoImpl<Entity, Key extends Serializable> implement
     @Override
     @SuppressWarnings("unchecked")
     public Collection<Entity> getAll() {
-        return (Collection<Entity>)getCurrentSession().createQuery("from " + entityClass.getName()).list();
+        Criteria criteria = getCurrentSession().createCriteria(entityClass);
+        return (Collection<Entity>)criteria.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    protected Collection<Entity> findByCriterion(Criterion criterion) {
+        Criteria criteria = getCurrentSession().createCriteria(entityClass);
+        criteria.add(criterion);
+        return (Collection<Entity>)criteria.list();
     }
 }

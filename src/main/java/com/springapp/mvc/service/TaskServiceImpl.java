@@ -46,4 +46,9 @@ public class TaskServiceImpl implements TaskService {
     public Collection<Task> getAllTasks() {
         return taskDao.getAll();
     }
+
+    @Override
+    public Collection<Task> findByUsername(String username) {
+        return taskDao.findByUsername(username);
+    }
 }

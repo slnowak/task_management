@@ -2,7 +2,11 @@ package com.springapp.mvc.persitence;
 
 import com.springapp.mvc.model.Task;
 import com.springapp.mvc.persitence.generic.GenericDaoImpl;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+
+import java.util.Collection;
 
 
 /**
@@ -13,5 +17,10 @@ import org.springframework.stereotype.Repository;
 public class TaskDaoImpl extends GenericDaoImpl<Task, Integer> implements TaskDao {
     protected TaskDaoImpl() {
         super(Task.class);
+    }
+
+    @Override
+    public Collection<Task> findByUsername(String username) {
+        return findByCriterion(Restrictions.eq("username", username));
     }
 }

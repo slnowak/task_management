@@ -1,9 +1,6 @@
 package com.springapp.mvc.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by novy on 31.05.14.
@@ -19,6 +16,10 @@ public class Task {
     private String name;
     private String description;
     private Boolean done;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     private Task() {}
 
@@ -59,5 +60,13 @@ public class Task {
 
     public void setDone(Boolean done) {
         this.done = done;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
