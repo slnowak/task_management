@@ -1,5 +1,7 @@
 package com.springapp.mvc.controller;
 
+import com.springapp.mvc.persitence.UserDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,8 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping(value = {"/", "/home"})
 public class HomeController {
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
 		model.addAttribute("message", "Hello world!");
@@ -19,20 +22,7 @@ public class HomeController {
 	}
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView login(@RequestParam(value = "error", required = false) String error,
-                              @RequestParam(value = "logout", required = false) String logout, HttpServletRequest request) {
-
-        ModelAndView model = new ModelAndView();
-//        if (error != null) {
-//            model.addObject("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
-//        }
-
-        if (logout != null) {
-            model.addObject("msg", "You've been logged out successfully.");
-        }
-        model.setViewName("login");
-
-        return model;
-
+    public String login(HttpServletRequest request) {
+        return "login";
     }
 }

@@ -13,8 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * Created by novy on 01.06.14.
- */
+* Created by novy on 01.06.14.
+*/
 
 @Configuration
 @EnableWebSecurity
@@ -31,13 +31,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        // TODO: set it up properly
         http.authorizeRequests().antMatchers("/tasks/**")
-                .access("hasRole('ROLE_ADMIN')").and().formLogin()
-                .loginPage("/login").failureUrl("/login?error")
+                .access("hasRole('ROLE_USER')").and().formLogin()
+//                .loginPage("/login").failureUrl("/login?error")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .and().logout().logoutSuccessUrl("/login?logout")
+//                .and().logout().logoutSuccessUrl("/login?logout")
                 .and().csrf()
                 .and().exceptionHandling().accessDeniedPage("/403");
     }
@@ -46,12 +46,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-
-
-
-//    @Bean
-//    public AuthenticationManagerBuilder authenticationManagerBuilder() {
-//        return new AuthenticationManagerBuilder();
-//    }
 
 }

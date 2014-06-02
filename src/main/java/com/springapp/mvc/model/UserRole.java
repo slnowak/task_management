@@ -9,16 +9,22 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user_roles", uniqueConstraints = @UniqueConstraint(columnNames = {"role", "username"}))
 public class UserRole {
+    public static enum Role {
+        ROLE_USER, ROLE_ADMIN;
+    }
+
     @Id
     @GeneratedValue
     private Integer userRoleId;
-    private String role;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @ManyToOne
     @JoinColumn(name = "username")
     private User user;
 
-    public UserRole(String role, User user) {
+    public UserRole(Role role, User user) {
         this.role = role;
         this.user = user;
     }
@@ -33,11 +39,11 @@ public class UserRole {
         this.userRoleId = userRoleId;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -47,5 +53,9 @@ public class UserRole {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getRoleAsString() {
+        return role.name();
     }
 }

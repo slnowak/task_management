@@ -7,6 +7,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.List;
 
 
 /**
@@ -20,7 +21,7 @@ public class TaskDaoImpl extends GenericDaoImpl<Task, Integer> implements TaskDa
     }
 
     @Override
-    public Collection<Task> findByUsername(String username) {
+    public List<Task> findByUsername(String username) {
         return findByCriterion(Restrictions.eq("username", username));
     }
 }

@@ -12,10 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by novy on 01.06.14.
@@ -34,7 +31,7 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         com.springapp.mvc.model.User user = userDao.getByPrimaryKey(username);
-        List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRole());
+        List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRoles());
         return buildUserForAuthentication(user, authorities);
     }
 
@@ -48,15 +45,15 @@ public class MyUserDetailsService implements UserDetailsService {
                         credentialsNonExpired, accountNonLocked, authorities);
     }
 
-    private List<GrantedAuthority> buildUserAuthority(Set<UserRole> userRoles) {
+    private List<GrantedAuthority> buildUserAuthority(List<UserRole> userRoles) {
 
-        Set<GrantedAuthority> authorities = new HashSet<>();
+        List<GrantedAuthority> authorities = new LinkedList<>();
 
         for (UserRole userRole : userRoles) {
-            authorities.add(new SimpleGrantedAuthority(userRole.getRole()));
+            authorities.add(new SimpleGrantedAuthority(userRole.getRoleAsString()));
         }
 
-        return new ArrayList<>(authorities);
+        return authorities;
     }
 }
 

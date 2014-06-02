@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by novy on 31.05.14.
@@ -43,12 +44,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Collection<Task> getAllTasks() {
+    public List<Task> getAllTasks() {
         return taskDao.getAll();
     }
 
     @Override
-    public Collection<Task> findByUsername(String username) {
+    public List<Task> findByUsername(String username) {
         return taskDao.findByUsername(username);
     }
 }

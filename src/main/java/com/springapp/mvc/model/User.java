@@ -1,9 +1,7 @@
 package com.springapp.mvc.model;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by novy on 01.06.14.
@@ -21,20 +19,20 @@ public class User {
     private Boolean active;
 
     @OneToMany(mappedBy = "user")
-    private Collection<Task> tasks;
+    private Collection<Task> tasks = new LinkedList<>(); // FIX IT
 
     @OneToMany(mappedBy = "user")
-    private Set<UserRole> userRole = new HashSet<>();
+    private List<UserRole> userRoles = new LinkedList<>();
 
     public User(String username, String password, String firstName, String lastName, Boolean active,
-                Collection<Task> tasks, Set<UserRole> userRole) {
+                Collection<Task> tasks, List<UserRole> userRoles) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.active = active;
         this.tasks = tasks;
-        this.userRole = userRole;
+        this.userRoles = userRoles;
     }
 
     public User() {}
@@ -95,15 +93,19 @@ public class User {
         this.tasks = tasks;
     }
 
-    public Set<UserRole> getUserRole() {
-        return userRole;
+    public List<UserRole> getUserRoles() {
+        return userRoles;
     }
 
-    public void setUserRole(Set<UserRole> userRole) {
-        this.userRole = userRole;
+    public void setUserRoles(List<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 
     public void addTask(Task task) {
         tasks.add(task);
+    }
+
+    public void addRole(UserRole userRole) {
+        userRoles.add(userRole);
     }
 }

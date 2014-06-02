@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by novy on 31.05.14.
@@ -53,15 +54,15 @@ public abstract class GenericDaoImpl<Entity, Key extends Serializable> implement
 
     @Override
     @SuppressWarnings("unchecked")
-    public Collection<Entity> getAll() {
+    public List<Entity> getAll() {
         Criteria criteria = getCurrentSession().createCriteria(entityClass);
-        return (Collection<Entity>)criteria.list();
+        return (List<Entity>)criteria.list();
     }
 
     @SuppressWarnings("unchecked")
-    protected Collection<Entity> findByCriterion(Criterion criterion) {
+    protected List<Entity> findByCriterion(Criterion criterion) {
         Criteria criteria = getCurrentSession().createCriteria(entityClass);
         criteria.add(criterion);
-        return (Collection<Entity>)criteria.list();
+        return (List<Entity>)criteria.list();
     }
 }

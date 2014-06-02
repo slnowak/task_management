@@ -4,10 +4,11 @@ import com.springapp.mvc.model.Task;
 import com.springapp.mvc.persitence.generic.GenericDao;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by novy on 31.05.14.
  */
 public interface TaskDao extends GenericDao<Task, Integer> {
-    public Collection<Task> findByUsername(String username);
+    public List<Task> findByUsername(String username);
 }
