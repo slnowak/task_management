@@ -62,8 +62,8 @@ public class RegistrationController {
         UserRole userRole = new UserRole(UserRole.Role.ROLE_USER, user);
         user.addRole(userRole);
         encodePassword(user);
-        userService.createUser(user);
-        userRoleService.createUserRole(userRole);
+        userService.create(user);
+        userRoleService.create(userRole);
 
         return "redirect:/home";
     }

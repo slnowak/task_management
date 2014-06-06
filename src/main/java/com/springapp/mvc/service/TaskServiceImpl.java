@@ -3,54 +3,25 @@ package com.springapp.mvc.service;
 import com.springapp.mvc.model.Task;
 import com.springapp.mvc.model.User;
 import com.springapp.mvc.persitence.TaskDao;
+import com.springapp.mvc.service.generic.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by novy on 31.05.14.
+ * Created by novy on 06.06.14.
  */
 @Service
-@Transactional
-public class TaskServiceImpl implements TaskService {
-    private TaskDao taskDao;
-
+public class TaskServiceImpl extends GenericServiceImpl<TaskDao, Task, Integer> implements TaskService {
     @Autowired
-    public void setTaskDao(TaskDao taskDao) {
-        this.taskDao = taskDao;
-    }
-
-    @Override
-    public void createTask(Task task) {
-        taskDao.create(task);
-    }
-
-    @Override
-    public void updateTask(Task task) {
-        taskDao.update(task);
-    }
-
-    @Override
-    public void deleteTask(Integer id) {
-        Task task = taskDao.getByPrimaryKey(id);
-        taskDao.delete(task);
-    }
-
-    @Override
-    public Task getTask(Integer id) {
-        return taskDao.getByPrimaryKey(id);
-    }
-
-    @Override
-    public List<Task> getAllTasks() {
-        return taskDao.getAll();
+    public TaskServiceImpl(TaskDao taskDao) {
+        super(taskDao);
     }
 
     @Override
     public List<Task> findByUser(User user) {
-        return taskDao.findByUser(user);
+        return dao.findByUser(user);
     }
 }

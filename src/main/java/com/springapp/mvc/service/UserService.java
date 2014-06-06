@@ -1,16 +1,11 @@
 package com.springapp.mvc.service;
 
 import com.springapp.mvc.model.User;
-
-import java.util.List;
+import com.springapp.mvc.persitence.UserDao;
+import com.springapp.mvc.service.generic.GenericService;
 
 /**
- * Created by novy on 01.06.14.
+ * Created by novy on 07.06.14.
  */
-public interface UserService {
-    public void createUser(User user);
-    public void updateUser(User user);
-    public User getUser(String username);
-    public List<User> getAllUsers();
-    public void deleteUser(String username);
+public interface UserService extends GenericService<UserDao, User, String> {
 }

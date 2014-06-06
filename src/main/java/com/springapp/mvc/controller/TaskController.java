@@ -2,10 +2,10 @@ package com.springapp.mvc.controller;
 
 import com.springapp.mvc.model.Task;
 import com.springapp.mvc.model.User;
-import com.springapp.mvc.model.UserRole;
 import com.springapp.mvc.service.TaskService;
 import com.springapp.mvc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -28,6 +28,7 @@ public class TaskController {
     private final static String EDIT_BINDING_RESULT_FLASH_ATTRIBUTE_NAME = "taskEditFormFlashAttribute";
 
     @Autowired
+//    @Qualifier("taskService")
     public void setTaskService(TaskService taskService) {
         this.taskService = taskService;
     }
@@ -50,7 +51,7 @@ public class TaskController {
         if (modelMap.containsAttribute(CREATE_BINDING_RESULT_FLASH_ATTRIBUTE_NAME)) {
             modelMap.addAttribute(BINDING_RESULT_NAME, modelMap.get(CREATE_BINDING_RESULT_FLASH_ATTRIBUTE_NAME));
         }
-        modelMap.addAttribute("users", userService.getAllUsers());
+        modelMap.addAttribute("users", userService.getAll());
         return "task/create_view";
     }
 
@@ -62,13 +63,13 @@ public class TaskController {
             return "redirect:/tasks/add";
         }
 
-        taskService.createTask(task);
+        taskService.create(task);
         return "redirect:/tasks";
     }
 
     @RequestMapping(value = "/tasks/edit/{id}", method = RequestMethod.GET)
     public String editTask(@PathVariable("id") Integer taskId, @ModelAttribute("task") Task task, ModelMap modelMap) {
-        Task editedTask = taskService.getTask(taskId);
+        Task editedTask = taskService.getByPrimaryKey(taskId);
 
         if (modelMap.containsAttribute(EDIT_BINDING_RESULT_FLASH_ATTRIBUTE_NAME)) {
             modelMap.put(BINDING_RESULT_NAME, modelMap.get(EDIT_BINDING_RESULT_FLASH_ATTRIBUTE_NAME));
@@ -87,33 +88,34 @@ public class TaskController {
             return "redirect:/tasks/edit/" + task.getId();
         }
 
-        taskService.updateTask(task);
+        taskService.update(task);
         redirectAttributes.addFlashAttribute("message", "Successfully updated task with id " + task.getId());
         return "redirect:/tasks";
     }
 
     @RequestMapping(value = "/tasks/delete/{id}", method = RequestMethod.GET) // TODO: method should be DELETE
     public String deleteTask(@PathVariable("id") Integer taskId, ModelMap modelMap) {
-        taskService.deleteTask(taskId);
+        taskService.delete(taskId);
         return "redirect:/tasks";
     }
 
     @RequestMapping(value = "/tasks/{id}", method = RequestMethod.GET)
     public String showDetails(@PathVariable("id") Integer taskId, ModelMap modelMap) {
-        Task task = taskService.getTask(taskId);
+        Task task = taskService.getByPrimaryKey(taskId);
         modelMap.put("task", task);
         return "task/details_view";
     }
 
     private User getCurrentUser(Principal principal) {
         String username = principal.getName();
-        return userService.getUser(username);
+        return userService.getByPrimaryKey(username);
     }
 
     private List<Task> getListOfTasks(User user) {
         List<Task> tasks;
-        if (user.isStaff()) {
-            tasks = taskService.getAllTasks();
+//        if (user.isStaff()) { // TODO: uncomment this!
+          if(true) {
+            tasks = taskService.getAll();
         } else {
             tasks = taskService.findByUser(user);
         }
