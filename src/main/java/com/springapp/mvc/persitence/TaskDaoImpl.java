@@ -1,6 +1,7 @@
 package com.springapp.mvc.persitence;
 
 import com.springapp.mvc.model.Task;
+import com.springapp.mvc.model.User;
 import com.springapp.mvc.persitence.generic.GenericDaoImpl;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -21,7 +22,7 @@ public class TaskDaoImpl extends GenericDaoImpl<Task, Integer> implements TaskDa
     }
 
     @Override
-    public List<Task> findByUsername(String username) {
-        return findByCriterion(Restrictions.eq("username", username));
+    public List<Task> findByUser(User user) {
+        return findByCriterion(Restrictions.eq("user", user));
     }
 }

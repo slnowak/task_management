@@ -1,13 +1,19 @@
 package com.springapp.mvc.controller;
 
 import com.springapp.mvc.model.Task;
+import com.springapp.mvc.model.User;
+import com.springapp.mvc.model.UserRole;
 import com.springapp.mvc.service.TaskService;
+import com.springapp.mvc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.security.Principal;
+import java.util.List;
 
 /**
  * Created by novy on 31.05.14.
@@ -16,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class TaskController {
     private TaskService taskService;
+    private UserService userService;
     private final static String BINDING_RESULT_NAME = "org.springframework.validation.BindingResult.task";
     private final static String CREATE_BINDING_RESULT_FLASH_ATTRIBUTE_NAME = "taskCreateFormFlashAttribute";
     private final static String EDIT_BINDING_RESULT_FLASH_ATTRIBUTE_NAME = "taskEditFormFlashAttribute";
@@ -25,9 +32,16 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
     @RequestMapping(value = "/tasks", method = RequestMethod.GET)
-    public String listView(ModelMap modelMap) {
-        modelMap.put("tasks", taskService.getAllTasks());
+    public String listView(ModelMap modelMap, Principal principal) {
+        User user = getCurrentUser(principal);
+        List<Task> tasks = getListOfTasks(user);
+        modelMap.put("tasks", tasks);
         return "task/list_view";
     }
 
@@ -36,6 +50,7 @@ public class TaskController {
         if (modelMap.containsAttribute(CREATE_BINDING_RESULT_FLASH_ATTRIBUTE_NAME)) {
             modelMap.addAttribute(BINDING_RESULT_NAME, modelMap.get(CREATE_BINDING_RESULT_FLASH_ATTRIBUTE_NAME));
         }
+        modelMap.addAttribute("users", userService.getAllUsers());
         return "task/create_view";
     }
 
@@ -81,6 +96,28 @@ public class TaskController {
     public String deleteTask(@PathVariable("id") Integer taskId, ModelMap modelMap) {
         taskService.deleteTask(taskId);
         return "redirect:/tasks";
+    }
+
+    @RequestMapping(value = "/tasks/{id}", method = RequestMethod.GET)
+    public String showDetails(@PathVariable("id") Integer taskId, ModelMap modelMap) {
+        Task task = taskService.getTask(taskId);
+        modelMap.put("task", task);
+        return "task/details_view";
+    }
+
+    private User getCurrentUser(Principal principal) {
+        String username = principal.getName();
+        return userService.getUser(username);
+    }
+
+    private List<Task> getListOfTasks(User user) {
+        List<Task> tasks;
+        if (user.isStaff()) {
+            tasks = taskService.getAllTasks();
+        } else {
+            tasks = taskService.findByUser(user);
+        }
+        return tasks;
     }
 
 }

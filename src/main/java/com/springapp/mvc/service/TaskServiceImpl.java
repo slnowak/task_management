@@ -1,6 +1,7 @@
 package com.springapp.mvc.service;
 
 import com.springapp.mvc.model.Task;
+import com.springapp.mvc.model.User;
 import com.springapp.mvc.persitence.TaskDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> findByUsername(String username) {
-        return taskDao.findByUsername(username);
+    public List<Task> findByUser(User user) {
+        return taskDao.findByUser(user);
     }
 }

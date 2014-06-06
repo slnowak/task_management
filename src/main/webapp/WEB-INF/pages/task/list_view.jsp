@@ -10,26 +10,24 @@
 
 <html>
 <head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <title>Tasks</title>
 </head>
 <body>
-    <p>Tasks:</p>
+    <p>List of all tasks:</p>
     <table border="2">
         <thead>
             <tr>
                 <td>Name</td>
-                <td>Description</td>
-                <td>Done</td>
-                <td>Action</td>
+                <td>Actions</td>
             </tr>
         </thead>
         <tbody>
             <c:forEach var="task" items="${tasks}">
                 <tr>
                     <td>${task.name}</td>
-                    <td>${task.description}</td>
-                    <td>${task.done}</td>
                     <td>
+                        <a href="${pageContext.request.contextPath}/tasks/${task.id}">Details</a>
                         <a href="${pageContext.request.contextPath}/tasks/edit/${task.id}">Edit!</a>
                         <a href="${pageContext.request.contextPath}/tasks/delete/${task.id}">Delete!</a>
                     </td>

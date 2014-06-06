@@ -45,7 +45,7 @@ public class MyUserDetailsService implements UserDetailsService {
                         credentialsNonExpired, accountNonLocked, authorities);
     }
 
-    private List<GrantedAuthority> buildUserAuthority(List<UserRole> userRoles) {
+    private List<GrantedAuthority> buildUserAuthority(Set<UserRole> userRoles) {
 
         List<GrantedAuthority> authorities = new LinkedList<>();
 

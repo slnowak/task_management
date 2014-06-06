@@ -37,6 +37,12 @@
                     <td><form:checkbox path="done" label="Done" /></td>
                 </tr>
                 <tr>
+                    <td><form:label path="user">User:</form:label></td>
+                    <%--<td><form:select path="user" items="${users}"/></td>--%>
+                    <td><form:errors path="user" cssClass=""/> </td>
+                </tr>
+
+                <tr>
                     <td>
                         <input type="submit" value="Save"/>
                         <a href="${pageContext.request.contextPath}/tasks">Cancel</a>

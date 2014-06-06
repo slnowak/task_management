@@ -1,6 +1,7 @@
 package com.springapp.mvc.service;
 
 import com.springapp.mvc.model.Task;
+import com.springapp.mvc.model.User;
 
 import java.util.Collection;
 import java.util.List;
@@ -14,5 +15,5 @@ public interface TaskService {
     public void deleteTask(Integer taskId);
     public Task getTask(Integer taskId);
     public List<Task> getAllTasks();
-    public List<Task> findByUsername(String username);
+    public List<Task> findByUser(User user);
 }

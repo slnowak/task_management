@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by novy on 01.06.14.
  */
@@ -33,6 +35,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(String username) {
         return userDao.getByPrimaryKey(username);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userDao.getAll();
     }
 
     @Override

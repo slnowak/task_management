@@ -18,14 +18,14 @@ public class User {
     private String email;
     private Boolean active;
 
-    @OneToMany(mappedBy = "user")
-    private Collection<Task> tasks = new LinkedList<>(); // FIX IT
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<Task> tasks = new HashSet<>(); // FIX IT
 
-    @OneToMany(mappedBy = "user")
-    private List<UserRole> userRoles = new LinkedList<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<UserRole> userRoles = new HashSet<>();
 
     public User(String username, String password, String firstName, String lastName, Boolean active,
-                Collection<Task> tasks, List<UserRole> userRoles) {
+                Set<Task> tasks, Set<UserRole> userRoles) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -85,19 +85,19 @@ public class User {
         this.active = active;
     }
 
-    public Collection<Task> getTasks() {
+    public Set<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(Collection<Task> tasks) {
+    public void setTasks(Set<Task> tasks) {
         this.tasks = tasks;
     }
 
-    public List<UserRole> getUserRoles() {
+    public Set<UserRole> getUserRoles() {
         return userRoles;
     }
 
-    public void setUserRoles(List<UserRole> userRoles) {
+    public void setUserRoles(Set<UserRole> userRoles) {
         this.userRoles = userRoles;
     }
 
@@ -107,5 +107,14 @@ public class User {
 
     public void addRole(UserRole userRole) {
         userRoles.add(userRole);
+    }
+
+    public boolean isStaff() {
+        for (UserRole userRole : userRoles) {
+            if (userRole.getRole() == UserRole.Role.ROLE_ADMIN) {
+                return true;
+            }
+        }
+        return false;
     }
 }
